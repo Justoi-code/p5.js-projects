@@ -1,4 +1,4 @@
-# p5js-projects
+# p5.js-projects
 Some practice projects for JavaScript in the web environment https://p5js.org/
 
 INSTRUCTIONS FOR USE:
