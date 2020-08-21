@@ -1,5 +1,6 @@
 # p5.js-projects
 Some practice projects for JavaScript in the web environment https://p5js.org/
+PNGs are previews of the projects (same titles)
 
 INSTRUCTIONS FOR USE:
 --------------------------------------------------------------------------------------------------------------------------------------------
