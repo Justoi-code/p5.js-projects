@@ -1,0 +1,62 @@
+//Test for lighting and 3D objects (click and hold to adjust camera)
+
+let x = 0.01;
+let y = 0.01;
+let z = 0.01;
+
+function setup() {
+  createCanvas(400, 400, WEBGL);
+}
+
+function draw() {
+  
+  background(220);
+  
+  let locX = mouseX - width/2;
+  let locY = mouseY - height/2;
+  
+  ambientLight(60, 60, 60);
+  pointLight(255, 255, 255, locX, locY, 100);
+  
+  keyPressed();
+  
+  if(mouseIsPressed)
+  {
+    orbitControl(25, 25);
+  }
+  else
+    rotation();
+  
+  boxCreate(0, 0, 50, 107, 150, 219);
+  boxCreate(-width/4, 0, 50, 224, 49, 49);
+  boxCreate(width/4, 0, 50, 23, 212, 42);
+}
+
+function rotation() {
+  
+  rotateX(frameCount * x);
+  rotateY(frameCount * y);
+  rotateZ(frameCount * z);
+  
+}
+
+function boxCreate(x, y, s, r, g, b) {
+  
+  push();
+  translate(x, y)
+  fill(r, g, b)
+  box(s);
+  pop();
+  
+}
+
+function keyPressed() {
+ if(keyCode == UP_ARROW){
+   x += 0.01;
+   keyCode = null;
+ }
+  if(keyCode == DOWN_ARROW){
+   x -= 0.01;
+   keyCode = null;
+ }
+}

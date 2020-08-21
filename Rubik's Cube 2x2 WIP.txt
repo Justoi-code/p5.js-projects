@@ -1,0 +1,177 @@
+// THIS IS A WORK IN PROGRESS, THE ARROW KEY CONTROL IS NOT YET PERFECTED
+let blu = [17, 94, 217];
+let ora = [227, 125, 0];
+let gre = [11, 214, 24];
+let red_ = [214, 11, 11];
+let whi = [255, 255, 255];
+let yel = [255, 234, 0];
+let x = 0;
+let y = 0;
+
+function setup() {
+  createCanvas(400, 400, WEBGL);
+  angleMode(DEGREES);
+}
+
+function draw() {
+  background(220);
+  lighting();
+  orbitControl(25, 25);
+  createRubik(y, x);
+}
+
+function panelCreate(x, y, z, r, g, b) {
+  // creates a panel of the cube
+  fill(r, g, b);
+  beginShape();
+  vertex(x-25, y-25, z-25);  
+  vertex(x-25, y+25, z-25); 
+  vertex(x+25, y+25, z-25); 
+  vertex(x+25, y-25, z-25); 
+  endShape();
+}
+
+function fullBoxCreate(x, y, z, c1, c2, c3, c4, c5, c6) {
+  // uses panelCreate to make a full cube with different colored sides
+  push();
+  panelCreate(x, y, z, c1[0], c1[1], c1[2]);
+  rotateX(90);
+  panelCreate(x, y, z, c2[0], c2[1], c2[2]);
+  rotateX(90);
+  panelCreate(x, y, z, c3[0], c3[1], c3[2]);
+  rotateY(90);
+  panelCreate(x, y, z, c4[0], c4[1], c4[2]);
+  rotateY(-180);
+  panelCreate(x, y, z, c5[0], c5[1], c5[2]);
+  rotateY(90);
+  rotateX(90);
+  panelCreate(x, y, z, c6[0], c6[1], c6[2]);
+  pop();
+}
+
+function createRubik(r1, r2, r3) {
+  // creates full rubik's cube
+  
+  // Upper half
+  //rotateY(-90*r2);
+  translate(25, -25, -25);
+  fullBoxCreate(0, 0, 0, blu, whi, gre, red_, ora, yel);
+  translate(0, 0, 50);
+  fullBoxCreate(0, 0, 0, blu, whi, gre, red_, ora, yel);
+  translate(-25, 25, -25);
+  rotateX(90*r1);
+  translate(-25, -25, -25);
+  fullBoxCreate(0, 0, 0, blu, whi, gre, red_, ora, yel);
+  translate(0, 0, 50);
+  fullBoxCreate(0, 0, 0, blu, whi, gre, red_, ora, yel);
+  translate(25, 25, -25);
+  
+  // Lower half
+  rotateY(90*r2);
+  translate(-25, 25, -25);
+  fullBoxCreate(0, 0, 0, blu, whi, gre, red_, ora, yel);
+  translate(0, 0, 50);
+  fullBoxCreate(0, 0, 0, blu, whi, gre, red_, ora, yel);
+  translate(25, -25, -25);
+  
+  push();
+  rotateX(-90*r1);
+  translate(25, 25, 25);
+  fullBoxCreate(0, 0, 0, blu, whi, gre, red_, ora, yel);
+  translate(0, 0, -50);
+  fullBoxCreate(0, 0, 0, blu, whi, gre, red_, ora, yel);
+  translate(-25, -25, 25);
+  pop();
+}
+
+function keyPressed() {
+  if(keyCode == LEFT_ARROW) {
+    
+    if(x == 0) {
+      x = 1;
+      keyCode = null;
+    }
+    else if(x == 1) {
+      x = 2;
+      keyCode = null;
+    }
+    else if(x == 2) {
+      x = 3;
+      keyCode = null;
+    }
+    else if (x == 3) {
+      x = 0;
+      keyCode = null;
+    }
+  }
+  
+  if(keyCode == UP_ARROW) {
+    
+    if(y == 0) {
+      y = 1;
+      keyCode = null;
+    }
+    else if(y == 1) {
+      y = 2;
+      keyCode = null;
+    }
+    else if(y == 2) {
+      y = 3;
+      keyCode = null;
+    }
+    else if (y == 3) {
+      y = 0;
+      keyCode = null;
+    }
+  }
+  
+  if(keyCode == DOWN_ARROW) {
+    
+    if(y == 3) {
+      y = 2;
+      keyCode = null;
+    }
+    else if(y == 2) {
+      y = 1;
+      keyCode = null;
+    }
+    else if(y == 1) {
+      y = 0;
+      keyCode = null;
+    }
+    else if (y == 0) {
+      y = 3;
+      keyCode = null;
+    }
+  }
+  
+  if(keyCode == RIGHT_ARROW) {
+    
+     if(x == 3) {
+      x = 2;
+      keyCode = null;
+    }
+    else if(x == 2) {
+      x = 1;
+      keyCode = null;
+    }
+    else if(x == 1) {
+      x = 0;
+      keyCode = null;
+    }
+    else if (x == 0) {
+      x = 3;
+      keyCode = null;
+    }
+  }
+  return false;
+}
+
+function lighting() {
+  // sets lighting effect
+  let locX = mouseX - width/2;
+  let locY = mouseY - height/2;
+  
+  ambientLight(200);
+  pointLight(255, 255, 255, locX, locY, 100);
+}
